@@ -35,6 +35,7 @@
 
     <!--Listview rows stuff-->
     <dimen name="lv_row_padding">5dp</dimen>
+    <dimen name="lv_row_padding20">20dp</dimen>
     <dimen name="lv_row_text_size">20sp</dimen>
     <dimen name="lv_row_text_size_small">14sp</dimen>
     <dimen name="lv_row_icon_width">50dp</dimen>

@@ -4,13 +4,10 @@ import android.app.Application;
 
 import androidx.room.Room;
 
-import com.manuelrojas.geomusic.data.repository.datasource.LocalTrackDataStore;
-import com.manuelrojas.geomusic.data.repository.datasource.TrackDataStore;
-import com.manuelrojas.geomusic.data.repository.datasource.db.ArtistDao;
-import com.manuelrojas.geomusic.data.repository.datasource.db.TrackDao;
-import com.manuelrojas.geomusic.data.repository.datasource.db.TrackDatabase;
-import com.manuelrojas.geomusic.data.repository.datasource.ArtistDataStore;
-import com.manuelrojas.geomusic.data.repository.datasource.LocalArtistDataStore;
+import com.manuelrojas.geomusic.data.repository.datasource.FixtureDataStore;
+import com.manuelrojas.geomusic.data.repository.datasource.LocalFixtureDataStore;
+import com.manuelrojas.geomusic.data.repository.datasource.db.FixtureDao;
+import com.manuelrojas.geomusic.data.repository.datasource.db.FixtureDatabase;
 
 import javax.inject.Singleton;
 
@@ -20,40 +17,28 @@ import dagger.Provides;
 @Module
 public class RoomModule {
 
-    private TrackDatabase trackDatabase;
+    private FixtureDatabase fixtureDatabase;
 
     public RoomModule(Application mApplication) {
-        trackDatabase = Room.databaseBuilder(mApplication, TrackDatabase.class, "track-db").build();
+        fixtureDatabase = Room.databaseBuilder(mApplication, FixtureDatabase.class, "fixture-db").build();
     }
 
     @Singleton
     @Provides
-    TrackDatabase providesRoomDatabase() {
-        return trackDatabase;
+    FixtureDatabase providesRoomDatabase() {
+        return fixtureDatabase;
     }
 
     @Singleton
     @Provides
-    ArtistDao providesArtistDao(TrackDatabase database) {
-        return database.getArtistDao();
+    FixtureDao providesFixtureDao(FixtureDatabase database) {
+        return database.getFixtureDao();
     }
 
     @Singleton
     @Provides
-    ArtistDataStore providesArtistDataStore(ArtistDao artistDao) {
-        return new LocalArtistDataStore(artistDao);
-    }
-
-    @Singleton
-    @Provides
-    TrackDao providesTrackDao(TrackDatabase database) {
-        return database.getTrackDao();
-    }
-
-    @Singleton
-    @Provides
-    TrackDataStore providesTrackDataStore(TrackDao trackDao) {
-        return new LocalTrackDataStore(trackDao);
+    FixtureDataStore providesFixtureDataStore(FixtureDao fixtureDao) {
+        return new LocalFixtureDataStore(fixtureDao);
     }
 
 }

@@ -8,6 +8,8 @@ import com.manuelrojas.geomusic.presentation.di.module.RoomModule;
 import com.manuelrojas.geomusic.presentation.di.module.ApplicationModule;
 import com.manuelrojas.geomusic.presentation.di.component.ApplicationComponent;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 public class MainApplication extends Application {
 
     ApplicationComponent mApplicationComponent;
@@ -17,6 +19,7 @@ public class MainApplication extends Application {
         super.onCreate();
         buildApplicationComponent();
 //        Stetho.initializeWithDefaults(this);
+        JodaTimeAndroid.init(this);
     }
 
     public ApplicationComponent getApplicationComponent() {

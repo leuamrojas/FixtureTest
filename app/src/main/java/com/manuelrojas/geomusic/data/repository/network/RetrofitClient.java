@@ -23,7 +23,8 @@ public class RetrofitClient {
     private static Retrofit retrofit = null;
     private OkHttpClient httpClient = null;
 //    private static final String BASE_URL = "https://api.github.com";
-    private static final String BASE_URL = "http://ws.audioscrobbler.com";
+//    private static final String BASE_URL = "https://ws.audioscrobbler.com";
+    private static final String BASE_URL = "https://storage.googleapis.com/cdn-og-test-api/test-task/";
 
     private static Map<String, String> headers = new HashMap<>();
 

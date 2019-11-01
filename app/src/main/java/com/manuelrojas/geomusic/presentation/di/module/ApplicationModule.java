@@ -3,11 +3,9 @@ package com.manuelrojas.geomusic.presentation.di.module;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.manuelrojas.geomusic.data.repository.ArtistDataRepository;
-import com.manuelrojas.geomusic.data.repository.TrackDataRepository;
+import com.manuelrojas.geomusic.data.repository.FixtureDataRepository;
 import com.manuelrojas.geomusic.data.utils.TLSSocketFactory;
-import com.manuelrojas.geomusic.domain.ArtistRepository;
-import com.manuelrojas.geomusic.domain.TrackRepository;
+import com.manuelrojas.geomusic.domain.FixtureRepository;
 import com.manuelrojas.geomusic.domain.executor.PostExecutionThread;
 import com.manuelrojas.geomusic.domain.executor.ThreadExecutor;
 import com.manuelrojas.geomusic.presentation.MainApplication;
@@ -63,15 +61,6 @@ public class ApplicationModule {
     Gson provideGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
-//                .registerTypeAdapter(ArtistApi.class, new SimpleDeserializer<ArtistApi>("artist"))
-//                .registerTypeAdapter(RankApi.class, new SimpleDeserializer<RankApi>("@rank"))
-//                .registerTypeAdapter(ImageApi.class, new ListDeserializer<ImageApi>("image"))
-//                .registerTypeAdapter(StreamableApi.class, new SimpleDeserializer<StreamableApi>("streamable"))
-//                .registerTypeAdapter(TrackArtistApi.class, new SimpleDeserializer<TrackArtistApi>("artist"))
-//                .registerTypeAdapter(TrackApi.class, new ListDeserializer<TrackApi>("track"))
-//                .registerTypeAdapter(TracksApi.class, new SimpleDeserializer<StreamableApi>("tracks"))
-//                .registerTypeAdapter(ArtistApi.class, new ListDeserializer<ArtistApi>("artist"))
-//                .registerTypeAdapter(TopArtistsApi.class, new SimpleDeserializer<TopArtistsApi>("topartists"));
         return gsonBuilder.create();
     }
 
@@ -92,17 +81,6 @@ public class ApplicationModule {
         client.cache(cache);
         return  client.build();
     }
-
-//    @Provides
-//    @Singleton
-//    Retrofit provideReftrofit(Gson gson, OkHttpClient okHttpClient) {
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .addConverterFactory(GsonConverterFactory.create(gson))
-//                .baseUrl(Constants.BASE_URL)
-//                .client(okHttpClient)
-//                .build();
-//        return retrofit;
-//    }
 
     @Provides
     @Singleton
@@ -127,14 +105,8 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    TrackRepository provideTrackRepository(TrackDataRepository trackDataRepository) {
-        return trackDataRepository;
-    }
-
-    @Provides
-    @Singleton
-    ArtistRepository provideArtistRepository(ArtistDataRepository artistDataRepository) {
-        return artistDataRepository;
+    FixtureRepository provideFixtureRepository(FixtureDataRepository fixtureDataRepository) {
+        return fixtureDataRepository;
     }
 
 }

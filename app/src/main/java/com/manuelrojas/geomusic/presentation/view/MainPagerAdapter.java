@@ -9,8 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.manuelrojas.geomusic.R;
-import com.manuelrojas.geomusic.presentation.view.fragment.ArtistListFragment;
-import com.manuelrojas.geomusic.presentation.view.fragment.TrackListFragment;
+import com.manuelrojas.geomusic.presentation.view.fragment.FixtureListFragment;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
 
@@ -28,9 +27,9 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new TrackListFragment();
+                return FixtureListFragment.forType(0); //Fixtures
             case 1:
-                return new ArtistListFragment();
+                return FixtureListFragment.forType(1); //Results
             default:
                 return null;
         }

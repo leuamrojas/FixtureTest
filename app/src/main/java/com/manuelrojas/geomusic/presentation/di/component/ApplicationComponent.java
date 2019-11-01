@@ -3,8 +3,7 @@ package com.manuelrojas.geomusic.presentation.di.component;
 import android.content.Context;
 
 import com.manuelrojas.geomusic.data.utils.SharedPrefsUtil;
-import com.manuelrojas.geomusic.domain.ArtistRepository;
-import com.manuelrojas.geomusic.domain.TrackRepository;
+import com.manuelrojas.geomusic.domain.FixtureRepository;
 import com.manuelrojas.geomusic.domain.executor.PostExecutionThread;
 import com.manuelrojas.geomusic.domain.executor.ThreadExecutor;
 import com.manuelrojas.geomusic.presentation.di.module.ApplicationModule;
@@ -35,7 +34,5 @@ public interface ApplicationComponent {
     Picasso getPicasso();
     ThreadExecutor threadExecutor();
     PostExecutionThread postExecutionThread();
-    TrackRepository trackRepository();
-    ArtistRepository artistRepository();
-
+    FixtureRepository fixtureRepository();
 }
