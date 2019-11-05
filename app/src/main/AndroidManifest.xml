@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.manuelrojas.geomusic">
+    package="com.manuelrojas.fixture">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".presentation.MainApplication"
+        android:name="com.manuelrojas.fixture.presentation.MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".presentation.view.activity.FixtureListActivity">
+        <activity android:name="com.manuelrojas.fixture.presentation.view.activity.FixtureListActivity">
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -25,8 +25,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.view.activity.BaseActivity" />
-        <activity android:name=".presentation.view.activity.MainActivity">
+        <activity android:name="com.manuelrojas.fixture.presentation.view.activity.BaseActivity" />
+        <activity android:name="com.manuelrojas.fixture.presentation.view.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -5,11 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.manuelrojas.geomusic.presentation.view.activity.MainActivity">
+    tools:context="com.manuelrojas.fixture.presentation.view.activity.MainActivity">
 
     <FrameLayout
         android:id="@+id/frame_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
