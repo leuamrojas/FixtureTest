@@ -6,8 +6,10 @@
     <color name="colorPrimary">#76A6EF </color>
     <color name="colorPrimaryDark">#76A6EF </color>
     <color name="colorAccent">@color/material_color_amber_900</color>
-    <color name="colorWhite">#FFFF</color>
-    <color name="colorGreyLight">@color/material_color_grey_400</color>
-    <color name="colorGreyLight2">@color/material_color_grey_100</color>
-    <color name="colorOrange">@color/material_color_deep_orange_A700</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorBlue700">@color/material_color_blue_700</color>
+    <color name="colorGrey100">@color/material_color_grey_100</color>
+    <color name="colorGrey400">@color/material_color_grey_400</color>
+    <color name="colorOrange700">@color/material_color_deep_orange_A700</color>
 </resources>

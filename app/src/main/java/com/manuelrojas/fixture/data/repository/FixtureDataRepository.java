@@ -50,7 +50,6 @@ public class FixtureDataRepository implements FixtureRepository {
 //            return Observable.concatArrayDelayError(getFixturesFromDb(), getFixturesFromApi(type))
 //                    .map(t -> fixtureEntityDataMapper.transform(t))
 //                    .doOnNext(t -> Log.d("FixtureDataRepository2", t.size() + ""));
-
     }
 
     @Override

@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/lv_row_padding"
-    android:background="@color/colorGreyLight">
+    android:background="@color/colorGrey400">
 
     <TextView
         android:id="@+id/tv_fixture_header"

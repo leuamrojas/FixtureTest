@@ -14,7 +14,7 @@ import io.reactivex.Observable;
 public interface FixtureDao extends BaseDao<FixtureEntity> {
 
     @Query(value = "SELECT * FROM fixture")
-//    Observable<List<FixtureEntity>> getFixtures();
+
     List<FixtureEntity> getFixtures();
 
     @Query(value = "SELECT * FROM fixture WHERE id = :id")

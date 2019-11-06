@@ -1,7 +1,6 @@
 package com.manuelrojas.fixture.presentation.view.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.Filterable;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.manuelrojas.fixture.R;
@@ -39,7 +37,10 @@ public class FixtureListAdapter extends RecyclerView.Adapter<BaseViewHolder> imp
 
     private static final int VIEW_TYPE_HEADER = 0;
     private static final int VIEW_TYPE_NORMAL = 1;
-    private static final String POSTPONED = "postponed";
+    private static String POSTPONED;
+    private static int COLOR_DEFAULT;
+    private static int COLOR_WINNER;
+    private static int COLOR_POSTPONED;
 
     private List<FixtureModel> originalData;
     private ItemFilter filter = new ItemFilter();
@@ -52,6 +53,10 @@ public class FixtureListAdapter extends RecyclerView.Adapter<BaseViewHolder> imp
         this.context = context;
         fixtureModelList = Collections.emptyList();
         originalData = fixtureModelList;
+        POSTPONED = context.getResources().getString(R.string.label_postponed);
+        COLOR_WINNER = context.getResources().getColor(R.color.colorBlue700);
+        COLOR_DEFAULT = context.getResources().getColor(R.color.colorBlack);
+        COLOR_POSTPONED = context.getResources().getColor(R.color.colorOrange700);
     }
 
     @Override
@@ -195,12 +200,12 @@ public class FixtureListAdapter extends RecyclerView.Adapter<BaseViewHolder> imp
                 rlFixtureDate.setVisibility(View.VISIBLE);
                 rlFixtureResult.setVisibility(View.GONE);
                 String fixtureState = fixtureModel.getState();
-                if (fixtureState!=null && fixtureState.equals(POSTPONED)) {
+                if (fixtureState!=null && fixtureState.equalsIgnoreCase(POSTPONED)) {
                     tvFixturePostponed.setVisibility(View.VISIBLE);
-                    tvDate.setTextColor(ContextCompat.getColor(context, R.color.colorOrange));
+                    tvDate.setTextColor(COLOR_POSTPONED);
                 } else {
                     tvFixturePostponed.setVisibility(View.GONE);
-                    tvDate.setTextColor(Color.BLACK);
+                    tvDate.setTextColor(COLOR_DEFAULT);
                 }
             } else {
                 rlFixtureDate.setVisibility(View.GONE);
@@ -211,14 +216,14 @@ public class FixtureListAdapter extends RecyclerView.Adapter<BaseViewHolder> imp
                     tvScoreHome.setText(String.valueOf(scoreModel.getHome()));
                     tvScoreAway.setText(String.valueOf(scoreModel.getAway()));
                     if (scoreModel.getHome() > scoreModel.getAway()) {
-                        tvScoreHome.setTextColor(Color.BLUE);
-                        tvScoreAway.setTextColor(Color.BLACK);
+                        tvScoreHome.setTextColor(COLOR_WINNER);
+                        tvScoreAway.setTextColor(COLOR_DEFAULT);
                     } else if (scoreModel.getHome() < scoreModel.getAway()) {
-                        tvScoreAway.setTextColor(Color.BLUE);
-                        tvScoreHome.setTextColor(Color.BLACK);
+                        tvScoreAway.setTextColor(COLOR_WINNER);
+                        tvScoreHome.setTextColor(COLOR_DEFAULT);
                     } else {
-                        tvScoreAway.setTextColor(Color.BLACK);
-                        tvScoreHome.setTextColor(Color.BLACK);
+                        tvScoreAway.setTextColor(COLOR_DEFAULT);
+                        tvScoreHome.setTextColor(COLOR_DEFAULT);
                     }
                 }
             }

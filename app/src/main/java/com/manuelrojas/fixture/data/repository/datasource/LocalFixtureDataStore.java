@@ -30,7 +30,6 @@ public class LocalFixtureDataStore implements FixtureDataStore {
                 emitter.onComplete();
             }
         });
-//        return fixtureDao.getFixtures();
     }
 
     @Override

@@ -29,7 +29,11 @@ public class FixtureListActivity extends BaseActivity implements HasComponent<Fi
 
     private SearchView searchView;
     private static final String SEARCH_QUERY = "search_query";
-    private String mQuery;
+    private static final String ANDROID_ID_SEARCH_BUTTON = "android:id/search_button";
+    private static final String ANDROID_ID_SEARCH_SRC_TEXT = "android:id/search_src_text";
+    private static final String ANDROID_ID_SEARCH_CLOSE_BTN = "android:id/search_close_btn";
+    private static final String VIEW_PAGER_PAGE_0 = "android:switcher:" + R.id.view_pager_fixture + ":" + 0;
+    private static final String VIEW_PAGER_PAGE_1 = "android:switcher:" + R.id.view_pager_fixture + ":" + 1;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, FixtureListActivity.class);
@@ -74,8 +78,10 @@ public class FixtureListActivity extends BaseActivity implements HasComponent<Fi
 
     private void setupSearchView(SearchView searchView) {
 
-        Fragment page1 = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.view_pager_fixture + ":" + 0);
-        Fragment page2 = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.view_pager_fixture + ":" + 1);
+//        Fragment page1 = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.view_pager_fixture + ":" + 0);
+//        Fragment page2 = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.view_pager_fixture + ":" + 1);
+        Fragment page1 = getSupportFragmentManager().findFragmentByTag(VIEW_PAGER_PAGE_0);
+        Fragment page2 = getSupportFragmentManager().findFragmentByTag(VIEW_PAGER_PAGE_1);
 
         FixtureListFragment fixturesFragment = (FixtureListFragment) page1;
         FixtureListFragment resultsFragment = (FixtureListFragment) page2;
@@ -104,19 +110,20 @@ public class FixtureListActivity extends BaseActivity implements HasComponent<Fi
     }
 
     private void setSearchTextColor(SearchView searchView) {
-        int searchId = getId(searchView, "android:id/search_src_text");
+        int searchId = getId(searchView, ANDROID_ID_SEARCH_SRC_TEXT);
         EditText searchPlate = searchView.findViewById(searchId);
         searchPlate.setTextColor(getResources().getColor(R.color.colorWhite));
+//        searchPlate.setHintTextColor(getResources().getColor(R.color.colorWhite));
 //        searchPlate.setBackgroundResource(R.drawable.edit_text_holo_light);
         searchPlate.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
 
-        searchId = getId(searchView, "android:id/search_button");
+        searchId = getId(searchView, ANDROID_ID_SEARCH_BUTTON);
         ImageView mSearchHintIcon = searchView.findViewById(searchId);
-        mSearchHintIcon.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+        mSearchHintIcon.setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
 
-        searchId = getId(searchView, "android:id/search_close_btn");
+        searchId = getId(searchView, ANDROID_ID_SEARCH_CLOSE_BTN);
         ImageView closeButton = searchView.findViewById(searchId);
-        closeButton.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.SRC_ATOP);
+        closeButton.setColorFilter(getResources().getColor(R.color.colorWhite), PorterDuff.Mode.SRC_ATOP);
     }
 
     private int getId(SearchView searchView, String strId) {

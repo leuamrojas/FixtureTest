@@ -40,5 +40,6 @@
 
     <string name="title_search">Search</string>
     <string name="title_hint">Enter a name to search</string>
+    <string name="label_postponed">POSTPONED</string>
 
 </resources>
