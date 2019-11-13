@@ -14,7 +14,7 @@ public class RemoteFixtureDataStore implements IRemoteFixtureDataStore{
 
     private RetrofitClient client;
 //    private ILocalFixtureDataStore fixtureDataStore;
-//    private FixtureEntityApiMapper fixtureEntityApiMapper;
+//    private FixtureApiDataMapper fixtureEntityApiMapper;
 
     @Inject
     public RemoteFixtureDataStore(RetrofitClient client) {
@@ -33,11 +33,11 @@ public class RemoteFixtureDataStore implements IRemoteFixtureDataStore{
 
 //    private RetrofitClient client;
 //    private ILocalFixtureDataStore fixtureDataStore;
-//    private FixtureEntityApiMapper fixtureEntityApiMapper;
+//    private FixtureApiDataMapper fixtureEntityApiMapper;
 //
 //    @Inject
 //    public RemoteFixtureDataStore(RetrofitClient client, ILocalFixtureDataStore fixtureDataStore,
-//                                  FixtureEntityApiMapper fixtureEntityApiMapper) {
+//                                  FixtureApiDataMapper fixtureEntityApiMapper) {
 //        this.client = client;
 //        this.fixtureDataStore = fixtureDataStore;
 //        this.fixtureEntityApiMapper = fixtureEntityApiMapper;

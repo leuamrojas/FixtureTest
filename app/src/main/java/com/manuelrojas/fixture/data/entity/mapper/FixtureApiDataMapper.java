@@ -5,10 +5,10 @@ import com.manuelrojas.fixture.data.entity.api.FixtureApi;
 
 import javax.inject.Inject;
 
-public class FixtureEntityApiMapper {
+public class FixtureApiDataMapper {
 
     @Inject
-    public FixtureEntityApiMapper() {
+    public FixtureApiDataMapper() {
     }
 
     public FixtureEntity transformFixtureApi(FixtureApi fixtureApi) {
