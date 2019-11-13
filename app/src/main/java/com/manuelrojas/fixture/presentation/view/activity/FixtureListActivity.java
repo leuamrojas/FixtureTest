@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +17,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.manuelrojas.fixture.R;
@@ -49,6 +51,8 @@ public class FixtureListActivity extends BaseActivity implements HasComponent<Fi
         this.initializeInjector();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getResources().getString(R.string.app_name));
+        actionBar.setDisplayHomeAsUpEnabled(false);
+//        final Drawable upArrow = getResources().getDrawable(R.drawable.);
         setViewPager();
 
     }
@@ -64,6 +68,19 @@ public class FixtureListActivity extends BaseActivity implements HasComponent<Fi
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
+
+        setupSearchView(menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        Toast.makeText(this, "onSupportNavigateUp", Toast.LENGTH_SHORT).show();
+        return super.onSupportNavigateUp();
+    }
+
+    private void setupSearchView(Menu menu) {
         // Associate searchable configuration with the SearchView
         SearchManager searchManager =
                 (SearchManager) getSystemService(SEARCH_SERVICE);
@@ -71,12 +88,6 @@ public class FixtureListActivity extends BaseActivity implements HasComponent<Fi
                 (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
-        setupSearchView(searchView);
-
-        return true;
-    }
-
-    private void setupSearchView(SearchView searchView) {
 
 //        Fragment page1 = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.view_pager_fixture + ":" + 0);
 //        Fragment page2 = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.view_pager_fixture + ":" + 1);
@@ -90,7 +101,11 @@ public class FixtureListActivity extends BaseActivity implements HasComponent<Fi
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
+                // see https://code.google.com/p/android/issues/detail?id=24599
+                searchView.clearFocus();
+
+                return true;
             }
 
             @Override
@@ -106,7 +121,8 @@ public class FixtureListActivity extends BaseActivity implements HasComponent<Fi
             }
         });
 
-        setSearchTextColor(searchView);
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+//        setSearchTextColor(searchView);
     }
 
     private void setSearchTextColor(SearchView searchView) {
