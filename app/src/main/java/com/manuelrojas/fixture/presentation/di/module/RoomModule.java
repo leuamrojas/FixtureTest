@@ -4,7 +4,7 @@ import android.app.Application;
 
 import androidx.room.Room;
 
-import com.manuelrojas.fixture.data.repository.datasource.FixtureDataStore;
+import com.manuelrojas.fixture.data.repository.datasource.ILocalFixtureDataStore;
 import com.manuelrojas.fixture.data.repository.datasource.LocalFixtureDataStore;
 import com.manuelrojas.fixture.data.repository.datasource.db.FixtureDao;
 import com.manuelrojas.fixture.data.repository.datasource.db.FixtureDatabase;
@@ -35,10 +35,10 @@ public class RoomModule {
         return database.getFixtureDao();
     }
 
-    @Singleton
-    @Provides
-    FixtureDataStore providesFixtureDataStore(FixtureDao fixtureDao) {
-        return new LocalFixtureDataStore(fixtureDao);
-    }
+//    @Singleton
+//    @Provides
+//    ILocalFixtureDataStore providesFixtureDataStore(FixtureDao fixtureDao) {
+//        return new LocalFixtureDataStore(fixtureDao);
+//    }
 
 }

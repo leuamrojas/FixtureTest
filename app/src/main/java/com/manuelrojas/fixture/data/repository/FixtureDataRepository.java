@@ -2,37 +2,46 @@ package com.manuelrojas.fixture.data.repository;
 
 import android.util.Log;
 
-import com.manuelrojas.fixture.data.repository.datasource.sync.SyncApiFixture;
+import com.manuelrojas.fixture.data.entity.api.FixtureApi;
+import com.manuelrojas.fixture.data.entity.mapper.FixtureEntityApiMapper;
+import com.manuelrojas.fixture.data.repository.datasource.ILocalFixtureDataStore;
+import com.manuelrojas.fixture.data.repository.datasource.sync.IRemoteFixtureDataStore;
 import com.manuelrojas.fixture.data.utils.NetworkUtil;
 import com.manuelrojas.fixture.domain.Fixture;
 import com.manuelrojas.fixture.domain.FixtureRepository;
 import com.manuelrojas.fixture.data.entity.FixtureEntity;
 import com.manuelrojas.fixture.data.entity.mapper.FixtureEntityDataMapper;
-import com.manuelrojas.fixture.data.repository.datasource.FixtureDataStore;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 
 public class FixtureDataRepository implements FixtureRepository {
 
-    private FixtureDataStore fixtureDataStore;
-    private SyncApiFixture syncApiFixture;
-    private FixtureEntityDataMapper fixtureEntityDataMapper;
+    private final ILocalFixtureDataStore localFixtureDataStore;
+    private final IRemoteFixtureDataStore remoteFixtureDataStore;
+    private final FixtureEntityDataMapper fixtureEntityDataMapper;
+    private final FixtureEntityApiMapper fixtureEntityApiMapper;
 
     @Inject
     NetworkUtil networkUtil;
 
     @Inject
-    FixtureDataRepository(FixtureDataStore fixtureDataStore, FixtureEntityDataMapper mapper,
-                          SyncApiFixture syncApiFixture) {
-        this.fixtureDataStore = fixtureDataStore;
-        this.fixtureEntityDataMapper = mapper;
-        this.syncApiFixture = syncApiFixture;
+    FixtureDataRepository( ILocalFixtureDataStore fixtureDataStore,
+                           IRemoteFixtureDataStore remoteFixtureDataStore,
+                           FixtureEntityDataMapper fixtureEntityDataMapper,
+                           FixtureEntityApiMapper fixtureEntityApiMapper ) {
+
+        this.localFixtureDataStore = fixtureDataStore;
+        this.remoteFixtureDataStore = remoteFixtureDataStore;
+        this.fixtureEntityDataMapper = fixtureEntityDataMapper;
+        this.fixtureEntityApiMapper = fixtureEntityApiMapper;
     }
 
     @Override
@@ -54,20 +63,36 @@ public class FixtureDataRepository implements FixtureRepository {
 
     @Override
     public Observable<Fixture> getFixture(String id) {
-        return fixtureDataStore.findById(id).map(t -> fixtureEntityDataMapper.transform(t));
+        return localFixtureDataStore.findById(id).map(t -> fixtureEntityDataMapper.transform(t));
     }
 
     private Observable<List<FixtureEntity>> getFixturesFromDb() {
-        return fixtureDataStore.findAll()
+        return localFixtureDataStore.findAll()
                 .doOnNext(t -> Log.d("getFixturesFromDb", t.size() + ""));
     }
 
     private Observable<List<FixtureEntity>> getFixturesFromApi(int type) {
-        return syncApiFixture.syncFixtures(type)
+        return remoteFixtureDataStore.syncFixtures(type)
+                .flatMap(fixtureApis -> setFixtures(fixtureApis))
                 .doOnNext(t -> Log.d("getFixturesFromApi", t.size() + ""));
     }
 
-    private Completable deleteFixturesFromDb() {
-        return fixtureDataStore.deleteAllFixtures();
+    private Observable<List<FixtureEntity>> setFixtures(List<FixtureApi> fixtureApis) {
+        return Observable.create(new ObservableOnSubscribe<List<FixtureEntity>>() {
+            @Override
+            public void subscribe(ObservableEmitter<List<FixtureEntity>> emitter) {
+                if (emitter.isDisposed()) return;
+                List<FixtureEntity> fixtureEntities = new ArrayList<>();
+                for (FixtureApi fixtureApi : fixtureApis) {
+                    FixtureEntity fixtureEntity = fixtureEntityApiMapper.transformFixtureApi(fixtureApi);
+                    long result = localFixtureDataStore.save(fixtureEntity);
+                    if ( result > 0)
+                        fixtureEntities.add(fixtureEntity);
+                }
+                emitter.onNext(fixtureEntities);
+                emitter.onComplete();
+            }
+        });
     }
+
 }

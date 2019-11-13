@@ -7,7 +7,7 @@ import java.util.List;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 
-public interface FixtureDataStore {
+public interface ILocalFixtureDataStore {
 
     Observable<List<FixtureEntity>> findAll();
 

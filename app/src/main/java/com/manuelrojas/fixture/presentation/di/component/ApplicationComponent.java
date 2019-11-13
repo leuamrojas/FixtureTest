@@ -2,6 +2,8 @@ package com.manuelrojas.fixture.presentation.di.component;
 
 import android.content.Context;
 
+import com.manuelrojas.fixture.data.repository.datasource.ILocalFixtureDataStore;
+import com.manuelrojas.fixture.data.repository.datasource.sync.IRemoteFixtureDataStore;
 import com.manuelrojas.fixture.data.utils.SharedPrefsUtil;
 import com.manuelrojas.fixture.domain.FixtureRepository;
 import com.manuelrojas.fixture.domain.executor.PostExecutionThread;
@@ -35,4 +37,6 @@ public interface ApplicationComponent {
     ThreadExecutor threadExecutor();
     PostExecutionThread postExecutionThread();
     FixtureRepository fixtureRepository();
+//    ILocalFixtureDataStore localFixtureDataStore();
+//    IRemoteFixtureDataStore remoteFixtureDataStore();
 }

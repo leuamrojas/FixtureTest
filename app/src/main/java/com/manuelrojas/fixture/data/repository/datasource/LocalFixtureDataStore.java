@@ -12,7 +12,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 
-public class LocalFixtureDataStore implements FixtureDataStore {
+public class LocalFixtureDataStore implements ILocalFixtureDataStore {
 
     private FixtureDao fixtureDao;
 

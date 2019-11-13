@@ -5,6 +5,12 @@ import android.content.SharedPreferences;
 
 import com.manuelrojas.fixture.data.executor.JobExecutor;
 import com.manuelrojas.fixture.data.repository.FixtureDataRepository;
+import com.manuelrojas.fixture.data.repository.datasource.ILocalFixtureDataStore;
+import com.manuelrojas.fixture.data.repository.datasource.LocalFixtureDataStore;
+import com.manuelrojas.fixture.data.repository.datasource.db.FixtureDao;
+import com.manuelrojas.fixture.data.repository.datasource.sync.IRemoteFixtureDataStore;
+import com.manuelrojas.fixture.data.repository.datasource.sync.RemoteFixtureDataStore;
+import com.manuelrojas.fixture.data.repository.network.RetrofitClient;
 import com.manuelrojas.fixture.data.utils.TLSSocketFactory;
 import com.manuelrojas.fixture.domain.FixtureRepository;
 import com.manuelrojas.fixture.domain.executor.PostExecutionThread;
@@ -31,6 +37,7 @@ import okhttp3.OkHttpClient;
 public class ApplicationModule {
     MainApplication mMainApplication;
     private static final String DAGGER_PREFS = "dagger-prefs";
+    private static final int CACHE_SIZE = 10 * 1024 * 1024;
 
     public ApplicationModule(MainApplication mainApplication) {
         mMainApplication = mainApplication;
@@ -51,8 +58,7 @@ public class ApplicationModule {
     @Provides
     @Singleton
     Cache provideOkHttpCache(Context context) {
-        int cacheSize = 10 * 1024 * 1024;
-        Cache cache = new Cache(context.getCacheDir(), cacheSize);
+        Cache cache = new Cache(context.getCacheDir(), CACHE_SIZE);
         return cache;
     }
 
@@ -107,6 +113,18 @@ public class ApplicationModule {
     @Singleton
     FixtureRepository provideFixtureRepository(FixtureDataRepository fixtureDataRepository) {
         return fixtureDataRepository;
+    }
+
+    @Singleton
+    @Provides
+    ILocalFixtureDataStore provideLocalFixtureDataStore(FixtureDao fixtureDao) {
+        return new LocalFixtureDataStore(fixtureDao);
+    }
+
+    @Singleton
+    @Provides
+    IRemoteFixtureDataStore provideRemoteFixtureDataStore(RetrofitClient client) {
+        return new RemoteFixtureDataStore(client);
     }
 
 }
